@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.5.0 (2026-11-26)
+
+- The window now uses an app-drawn title bar instead of the native one, with drawn minimize and close buttons that follow the app theme. The header doubles as the drag region.
+- Editor hover tooltips and autocomplete popups are no longer clipped behind the output pane (fork only: `fixedOverflowWidgets`).
+- Local dev: the dev server now uses port 5300, and `engines.node` accepts any Node >= 24.22.2.
 ## v2.4.0 (2026-10-30)
 
 - Playwright output folders are now ignored.
