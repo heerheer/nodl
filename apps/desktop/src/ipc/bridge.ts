@@ -114,3 +114,11 @@ export function saveTabContent(id: string, code: string): void {
 export function deleteTabContent(id: string): void {
   getAPI()?.deleteTabContent(id)
 }
+
+export function minimizeWindow(): void {
+  getAPI()?.minimizeWindow()
+}
+
+export function closeWindow(): void {
+  getAPI()?.closeWindow()
+}

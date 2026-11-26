@@ -80,7 +80,12 @@ function createWindow(): void {
       : {}),
     minWidth: 800,
     minHeight: 500,
-    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
+    // Custom title bar: macOS keeps its traffic lights over the hidden strip,
+    // Windows/Linux drop the native one entirely. `hidden` (not `frame: false`)
+    // keeps the OS resize border + shadow, and titleBarOverlay: false keeps the
+    // native caption buttons off so the header can draw its own.
+    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'hidden',
+    titleBarOverlay: false,
     trafficLightPosition: process.platform === 'darwin' ? { x: 12, y: 10 } : undefined,
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
@@ -246,6 +251,16 @@ ipcMain.handle(IPC.CHECK_FOR_UPDATES, async (): Promise<UpdateInfo> => {
 
 ipcMain.on(IPC.OPEN_EXTERNAL, (_event, url: string) => {
   shell.openExternal(url)
+})
+
+// --- Custom title bar window controls ---
+ipcMain.on(IPC.WINDOW_MINIMIZE, () => {
+  mainWindow?.minimize()
+})
+
+ipcMain.on(IPC.WINDOW_CLOSE, () => {
+  // Same path as the native close button: fires 'close' (which saves window state)
+  mainWindow?.close()
 })
 
 // --- Code execution ---

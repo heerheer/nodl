@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Sun, Moon, Monitor, PanelLeft, PanelLeftClose } from 'lucide-react'
+import { Sun, Moon, Monitor, PanelLeft, PanelLeftClose, Minus, X } from 'lucide-react'
+import { minimizeWindow, closeWindow } from '../../ipc/bridge'
 import { SettingsDialog } from '../Settings/SettingsDialog'
 import { UpdateDialog } from './UpdateDialog'
 import { AboutDialog } from './AboutDialog'
@@ -92,7 +93,7 @@ export function Header() {
 
         {/* Right: update + theme toggle */}
         <div
-          className="flex items-center gap-0.5 shrink-0 px-3"
+          className={`flex items-center gap-0.5 shrink-0 ${isMac ? 'px-3' : 'pl-3'}`}
           style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
         >
           {update.available && (
@@ -132,6 +133,22 @@ export function Header() {
             <ThemeIcon theme={theme} />
           </button>
         </div>
+
+        {/* Window controls — drawn by us since the native title bar is hidden.
+            macOS keeps its traffic lights (hiddenInset), so no buttons there. */}
+        {!isMac && (
+          <div
+            className="flex items-center shrink-0 h-full"
+            style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
+          >
+            <button className="window-control-btn" onClick={minimizeWindow} title="Minimize">
+              <Minus size={15} />
+            </button>
+            <button className="window-control-btn close" onClick={closeWindow} title="Close window">
+              <X size={15} />
+            </button>
+          </div>
+        )}
       </header>
       <SettingsDialog open={settingsOpen} onClose={closeSettings} />
       <UpdateDialog open={updateDialogOpen} onClose={() => setUpdateDialogOpen(false)} update={update} />

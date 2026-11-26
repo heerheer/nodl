@@ -26,7 +26,9 @@ export const IPC = {
   SAVE_TAB_INDEX: 'ipc:save-tab-index',
   LOAD_TAB_CONTENT: 'ipc:load-tab-content',
   SAVE_TAB_CONTENT: 'ipc:save-tab-content',
-  DELETE_TAB_CONTENT: 'ipc:delete-tab-content'
+  DELETE_TAB_CONTENT: 'ipc:delete-tab-content',
+  WINDOW_MINIMIZE: 'ipc:window-minimize',
+  WINDOW_CLOSE: 'ipc:window-close'
 } as const
 
 export interface UpdateInfo {
@@ -191,6 +193,8 @@ export interface ElectronAPI {
   loadTabContent: (id: string) => Promise<string | null>
   saveTabContent: (id: string, code: string) => void
   deleteTabContent: (id: string) => void
+  minimizeWindow: () => void
+  closeWindow: () => void
 }
 
 declare global {

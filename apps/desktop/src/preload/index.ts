@@ -126,6 +126,14 @@ const api: ElectronAPI = {
 
   deleteTabContent(id: string) {
     ipcRenderer.send(IPC.DELETE_TAB_CONTENT, id)
+  },
+
+  minimizeWindow() {
+    ipcRenderer.send(IPC.WINDOW_MINIMIZE)
+  },
+
+  closeWindow() {
+    ipcRenderer.send(IPC.WINDOW_CLOSE)
   }
 }
 
